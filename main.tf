@@ -108,17 +108,17 @@ resource "aws_route_table" "zone-c-public" {
 
 resource "aws_route_table_association" "zone-a-public" {
   subnet_id = "${aws_subnet.zone-a-public.id}"
-  route_table_id = "${aws_route_table.zone-a-public}"
+  route_table_id = "${aws_route_table.zone-a-public.id}"
 }
 
 resource "aws_route_table_association" "zone-b-public" {
   subnet_id = "${aws_subnet.zone-b-public.id}"
-  route_table_id = "${aws_route_table.zone-b-public}"
+  route_table_id = "${aws_route_table.zone-b-public.id}"
 }
 
 resource "aws_route_table_association" "zone-c-public" {
   subnet_id = "${aws_subnet.zone-c-public.id}"
-  route_table_id = "${aws_route_table.zone-c-public}"
+  route_table_id = "${aws_route_table.zone-c-public.id}"
 }
 
 resource "aws_eip" "zone-a-nat" {
@@ -234,15 +234,15 @@ resource "aws_route_table" "zone-c-private" {
 
 resource "aws_route_table_association" "zone-a-private" {
   subnet_id = "${aws_subnet.zone-a-private.id}"
-  route_table_id = "${aws_route_table.zone-a-private}"
+  route_table_id = "${aws_route_table.zone-a-private.id}"
 }
 
 resource "aws_route_table_association" "zone-b-private" {
   subnet_id = "${aws_subnet.zone-b-private.id}"
-  route_table_id = "${aws_route_table.zone-b-private}"
+  route_table_id = "${aws_route_table.zone-b-private.id}"
 }
 
 resource "aws_route_table_association" "zone-c-private" {
   subnet_id = "${aws_subnet.zone-c-private.id}"
-  route_table_id = "${aws_route_table.zone-c-private}"
+  route_table_id = "${aws_route_table.zone-c-private.id}"
 }
