@@ -169,7 +169,7 @@ resource "aws_subnet" "zone-a-private" {
 resource "aws_subnet" "zone-b-private" {
     vpc_id = "${aws_vpc.etcd.id}"
 
-    cidr_block = "${var.private_subnet_cidr_a}"
+    cidr_block = "${var.private_subnet_cidr_b}"
     availability_zone = "${var.availability_zone_b}"
 
     tags {
@@ -181,7 +181,7 @@ resource "aws_subnet" "zone-b-private" {
 resource "aws_subnet" "zone-c-private" {
     vpc_id = "${aws_vpc.etcd.id}"
 
-    cidr_block = "${var.private_subnet_cidr_a}"
+    cidr_block = "${var.private_subnet_cidr_c}"
     availability_zone = "${var.availability_zone_c}"
 
     tags {

@@ -9,7 +9,7 @@ variable "owner" {
 }
 
 variable "env" {
-  default = "etcd-"
+  default = "etcd"
 }
 
 variable "region" {
