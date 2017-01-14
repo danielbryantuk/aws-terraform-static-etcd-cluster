@@ -85,7 +85,6 @@ variable "instance_type" {
 
 
 variable "current_location_cidr" {
-  default = "217.138.34.2/32"
 }
 
 variable "instance_public_key_contents" {
