@@ -56,10 +56,10 @@ resource "aws_subnet" "zone-c-public" {
     vpc_id = "${aws_vpc.etcd.id}"
 
     cidr_block = "${var.public_subnet_cidr_c}"
-    availability_zone = "${var.availability_zone_b}"
+    availability_zone = "${var.availability_zone_c}"
 
     tags {
-        Name = "${var.env}-${var.availability_zone_b}-public-subnet"
+        Name = "${var.env}-${var.availability_zone_c}-public-subnet"
         Owner = "${var.owner}"
     }
 }
@@ -245,4 +245,41 @@ resource "aws_route_table_association" "zone-b-private" {
 resource "aws_route_table_association" "zone-c-private" {
   subnet_id = "${aws_subnet.zone-c-private.id}"
   route_table_id = "${aws_route_table.zone-c-private.id}"
+}
+
+
+# ELB
+
+resource "aws_elb" "etcd" {
+  name = "${var.env}-public-elb"
+
+  subnets = ["${aws_subnet.zone-a-public.id}","${aws_subnet.zone-b-public.id}","${aws_subnet.zone-c-public.id}"]
+
+  listener {
+    instance_port = 2379
+    instance_protocol = "tcp"
+    lb_port = 2379
+    lb_protocol = "tcp"
+  }
+
+  health_check {
+    healthy_threshold = 2
+    unhealthy_threshold = 2
+    timeout = 3
+    target = "HTTP:2379/health"
+    interval = 30
+  }
+
+  instances = ["${aws_instance.etcd0.id}","${aws_instance.etcd1.id}","${aws_instance.etcd2.id}"]
+  cross_zone_load_balancing = true
+  idle_timeout = 400
+  connection_draining = true
+  connection_draining_timeout = 400
+
+  security_groups = ["${aws_security_group.public-facing-elb.id}"]
+
+  tags {
+		Name = "${var.env}-public-elb"
+		Owner = "${var.owner}"
+	}
 }
