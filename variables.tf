@@ -69,8 +69,6 @@ variable "cidr_range_all" {
 }
 
 
-
-
 variable "instance_image" {
   default = "ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*"
 }
@@ -85,6 +83,13 @@ variable "instance_type" {
 
 
 variable "current_location_cidr" {
+}
+
+
+variable "instance_ssh_username" {
+}
+
+variable "instance_private_key_file" {
 }
 
 variable "instance_public_key_contents" {
