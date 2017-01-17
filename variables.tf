@@ -4,6 +4,18 @@ variable "aws_access_key" {
 variable "aws_secret_key" {
 }
 
+variable "current_location_cidr" {
+}
+
+variable "instance_ssh_username" {
+}
+
+variable "instance_private_key_file" {
+}
+
+variable "instance_public_key_contents" {
+}
+
 variable "owner" {
   default = "daniel"
 }
@@ -16,58 +28,37 @@ variable "region" {
   default = "eu-west-1"
 }
 
-variable "availability_zone_a" {
-  default = "eu-west-1a"
-}
-
-variable "availability_zone_b" {
-  default = "eu-west-1b"
-}
-
-variable "availability_zone_c" {
-  default = "eu-west-1c"
-}
-
 variable "vpc_cidr" {
   default = "10.42.0.0/16"
 }
 
-variable "public_subnet_cidr_a" {
-  default = "10.42.100.0/24"
+variable "availability_zones" {
+  default = {
+    zone0 = "eu-west-1a"
+    zone1 = "eu-west-1b"
+    zone2 = "eu-west-1c"
+  }
 }
 
-variable "public_subnet_cidr_b" {
-  default = "10.42.101.0/24"
-}
-
-variable "public_subnet_cidr_c" {
-  default = "10.42.102.0/24"
-}
-
-variable "private_subnet_cidr_a" {
-  default = "10.42.0.0/24"
-}
-
-variable "private_subnet_cidr_b" {
-  default = "10.42.1.0/24"
-}
-
-variable "private_subnet_cidr_c" {
-  default = "10.42.2.0/24"
+variable "public_subnet_cidrs" {
+  default = {
+    zone0 = "10.42.100.0/24"
+    zone1 = "10.42.101.0/24"
+    zone2 = "10.42.102.0/24"
+  }
 }
 
 variable "private_subnet_cidrs" {
   default = {
-    "0" = "10.42.0.0/24"
-    "1" = "10.42.1.0/24"
-    "2" = "10.42.2.0/24"
+    zone0 = "10.42.0.0/24"
+    zone1 = "10.42.1.0/24"
+    zone2 = "10.42.2.0/24"
   }
 }
 
 variable "cidr_range_all" {
   default = "0.0.0.0/0"
 }
-
 
 variable "instance_image" {
   default = "ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*"
@@ -79,18 +70,4 @@ variable "instance_image_provider_id" {
 
 variable "instance_type" {
   default = "t2.micro"
-}
-
-
-variable "current_location_cidr" {
-}
-
-
-variable "instance_ssh_username" {
-}
-
-variable "instance_private_key_file" {
-}
-
-variable "instance_public_key_contents" {
 }

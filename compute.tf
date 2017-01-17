@@ -11,46 +11,18 @@ data "aws_ami" "ubuntu" {
   owners = ["${var.instance_image_provider_id}"]
 }
 
-
-resource "aws_instance" "etcd0" { # TODO should be count
+resource "aws_instance" "etcd" {
+  count = "${length(var.availability_zones)}"
   ami = "${data.aws_ami.ubuntu.id}"
   instance_type = "${var.instance_type}"
 
-  subnet_id = "${aws_subnet.zone-a-private.id}"
-  vpc_security_group_ids = ["${aws_security_group.etcd-instance.id}"]
-
-  tags {
-    Name = "${var.env}-instance-0-etcd"
-    Owner = "${var.owner}"
-  }
-}
-
-resource "aws_instance" "etcd1" {
-  ami = "${data.aws_ami.ubuntu.id}"
-  instance_type = "${var.instance_type}"
-
-  subnet_id = "${aws_subnet.zone-b-private.id}"
+  subnet_id = "${element(aws_subnet.public.*.id, count.index)}"
   vpc_security_group_ids = ["${aws_security_group.etcd-instance.id}"]
 
   key_name = "${aws_key_pair.daniel.key_name}"
 
   tags {
-    Name = "${var.env}-instance-1-etcd"
-    Owner = "${var.owner}"
-  }
-}
-
-resource "aws_instance" "etcd2" {
-  ami = "${data.aws_ami.ubuntu.id}"
-  instance_type = "${var.instance_type}"
-
-  subnet_id = "${aws_subnet.zone-c-private.id}"
-  vpc_security_group_ids = ["${aws_security_group.etcd-instance.id}"]
-
-  key_name = "${aws_key_pair.daniel.key_name}"
-
-  tags {
-    Name = "${var.env}-instance-2-etcd"
+    Name = "${var.env}-instance-etcd${count.index}"
     Owner = "${var.owner}"
   }
 }
@@ -60,7 +32,7 @@ resource "aws_instance" "jump_box" {
   instance_type = "${var.instance_type}"
 
   associate_public_ip_address = true
-  subnet_id = "${aws_subnet.zone-a-public.id}"
+  subnet_id = "${aws_subnet.public.0.id}"
   vpc_security_group_ids = ["${aws_security_group.etcd-instance.id}"]
 
   key_name = "${aws_key_pair.daniel.key_name}"
