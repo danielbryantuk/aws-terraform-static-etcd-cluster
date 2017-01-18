@@ -24,6 +24,8 @@ resource "aws_instance" "etcd" {
 
   key_name = "${aws_key_pair.daniel.key_name}"
 
+  user_data = "apt-get install -y etcd"
+
   tags {
     Name  = "${var.env}-instance-etcd${count.index}"
     Owner = "${var.owner}"
