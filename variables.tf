@@ -1,20 +1,14 @@
-variable "aws_access_key" {
-}
+variable "aws_access_key" {}
 
-variable "aws_secret_key" {
-}
+variable "aws_secret_key" {}
 
-variable "current_location_cidr" {
-}
+variable "current_location_cidr" {}
 
-variable "instance_ssh_username" {
-}
+variable "instance_ssh_username" {}
 
-variable "instance_private_key_file" {
-}
+variable "instance_private_key_file" {}
 
-variable "instance_public_key_contents" {
-}
+variable "instance_public_key_contents" {}
 
 variable "owner" {
   default = "daniel"
