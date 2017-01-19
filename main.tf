@@ -69,6 +69,7 @@ resource "aws_eip" "public_nat" {
 
 resource "aws_nat_gateway" "public" {
   depends_on    = ["aws_internet_gateway.etcd"]
+  count = "${length(var.availability_zones)}"
   allocation_id = "${element(aws_eip.public_nat.*.id, count.index)}"
   subnet_id     = "${element(aws_subnet.public.*.id, count.index)}"
 }
