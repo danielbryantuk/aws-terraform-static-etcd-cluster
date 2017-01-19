@@ -38,7 +38,7 @@ resource "aws_instance" "jump_box" {
 
   associate_public_ip_address = true
   subnet_id                   = "${aws_subnet.public.0.id}"
-  vpc_security_group_ids      = ["${aws_security_group.etcd-instance.id}"]
+  vpc_security_group_ids      = ["${aws_security_group.etcd-instance.id}", "${aws_security_group.jump_box.id}"]
 
   key_name = "${aws_key_pair.daniel.key_name}"
 
