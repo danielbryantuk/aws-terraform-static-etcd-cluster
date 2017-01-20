@@ -112,6 +112,8 @@ resource "aws_security_group_rule" "allow_all_egress" {
   security_group_id = "${aws_security_group.etcd-instance.id}"
 }
 
+# ------ jump box -------
+
 resource "aws_security_group" "jump_box" {
   name   = "jump_box"
   vpc_id = "${aws_vpc.etcd.id}"
