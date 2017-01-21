@@ -14,6 +14,7 @@ data "aws_ami" "ubuntu" {
   owners = ["${var.instance_image_provider_id}"]
 }
 
+
 resource "aws_instance" "etcd" {
   count         = "${length(var.availability_zones)}"
   ami           = "${data.aws_ami.ubuntu.id}"
@@ -24,7 +25,7 @@ resource "aws_instance" "etcd" {
 
   key_name = "${aws_key_pair.daniel.key_name}"
 
-  user_data = "apt-get install -y etcd"
+  user_data = "${file("files/etcd-user-data.sh")}"
 
   tags {
     Name  = "${var.env}-instance-etcd${count.index}"
