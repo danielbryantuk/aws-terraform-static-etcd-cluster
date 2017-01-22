@@ -3,5 +3,5 @@ output "etcd public ELB address" {
 }
 
 output "jump_box_ip" {
-  value = "${aws_instance.jump_box.public_ip}"
+  value = "ssh -A ubuntu@${aws_instance.jump_box.public_ip}"
 }

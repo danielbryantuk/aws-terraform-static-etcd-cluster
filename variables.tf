@@ -50,6 +50,18 @@ variable "private_subnet_cidrs" {
   }
 }
 
+variable "etcd_private_ips" {
+  default = {
+    zone0 = "10.42.0.5"
+    zone1 = "10.42.1.5"
+    zone2 = "10.42.2.5"
+  }
+}
+
+variable "jump_box_private_ip" {
+  default = "10.42.100.5"
+}
+
 variable "cidr_range_all" {
   default = "0.0.0.0/0"
 }
