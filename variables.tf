@@ -42,19 +42,27 @@ variable "public_subnet_cidrs" {
   }
 }
 
+variable "nat_gateway_private_ips" {
+  default = {
+    zone0 = "10.42.100.10"
+    zone1 = "10.42.101.10"
+    zone2 = "10.42.102.10"
+  }
+}
+
 variable "private_subnet_cidrs" {
   default = {
-    zone0 = "10.42.0.0/24"
-    zone1 = "10.42.1.0/24"
-    zone2 = "10.42.2.0/24"
+    zone0 = "10.42.10.0/24"
+    zone1 = "10.42.11.0/24"
+    zone2 = "10.42.12.0/24"
   }
 }
 
 variable "etcd_private_ips" {
   default = {
-    zone0 = "10.42.0.5"
-    zone1 = "10.42.1.5"
-    zone2 = "10.42.2.5"
+    zone0 = "10.42.10.5"
+    zone1 = "10.42.11.5"
+    zone2 = "10.42.12.5"
   }
 }
 

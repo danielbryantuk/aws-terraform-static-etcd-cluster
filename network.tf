@@ -59,6 +59,7 @@ resource "aws_route_table_association" "public" {
 resource "aws_eip" "public_nat" {
   count = "${length(var.availability_zones)}"
   vpc   = true
+  associate_with_private_ip = "${lookup(var.nat_gateway_private_ips, "zone${count.index}")}"
 }
 
 resource "aws_nat_gateway" "public" {
