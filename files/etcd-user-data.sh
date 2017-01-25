@@ -2,10 +2,10 @@
 cd /tmp
 wget https://github.com/coreos/etcd/releases/download/v3.0.10/etcd-v3.0.10-linux-amd64.tar.gz
 tar -xvf etcd-v3.0.10-linux-amd64.tar.gz
-sudo mv etcd-v3.0.10-linux-amd64/etcd* /usr/bin/
-sudo mkdir -p /var/lib/etcd
+mv etcd-v3.0.10-linux-amd64/etcd* /usr/bin/
+mkdir -p /var/lib/etcd
 
-cat > etcd.service <<"EOF"
+cat > etcd.service <<EOF
 [Unit]
 Description=etcd
 Documentation=https://github.com/coreos
@@ -37,10 +37,10 @@ INTERNAL_IP=$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)
 ETCD_NAME=controller$(echo $INTERNAL_IP | cut -c 8)
 sed -i s/INTERNAL_IP/${INTERNAL_IP}/g etcd.service
 sed -i s/ETCD_NAME/${ETCD_NAME}/g etcd.service
-sudo mv etcd.service /etc/systemd/system/
+mv etcd.service /etc/systemd/system/
 
-sudo systemctl daemon-reload
-sudo systemctl enable etcd
-sudo systemctl start etcd
+systemctl daemon-reload
+systemctl enable etcd
+systemctl start etcd
 
-sudo systemctl status etcd --no-pager
+systemctl status etcd --no-pager
