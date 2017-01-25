@@ -14,7 +14,6 @@ data "aws_ami" "ubuntu" {
   owners = ["${var.instance_image_provider_id}"]
 }
 
-
 resource "aws_instance" "etcd" {
   count         = "${length(var.availability_zones)}"
   ami           = "${data.aws_ami.ubuntu.id}"
@@ -22,7 +21,7 @@ resource "aws_instance" "etcd" {
 
   subnet_id              = "${element(aws_subnet.private.*.id, count.index)}"
   vpc_security_group_ids = ["${aws_security_group.etcd-instance.id}"]
-  private_ip = "${lookup(var.etcd_private_ips, "zone${count.index}")}"
+  private_ip             = "${lookup(var.etcd_private_ips, "zone${count.index}")}"
 
   key_name = "${aws_key_pair.daniel.key_name}"
 
@@ -41,7 +40,7 @@ resource "aws_instance" "jump_box" {
   associate_public_ip_address = true
   subnet_id                   = "${aws_subnet.public.0.id}"
   vpc_security_group_ids      = ["${aws_security_group.etcd-instance.id}", "${aws_security_group.jump_box.id}"]
-  private_ip = "${var.jump_box_private_ip}"
+  private_ip                  = "${var.jump_box_private_ip}"
 
   key_name = "${aws_key_pair.daniel.key_name}"
 

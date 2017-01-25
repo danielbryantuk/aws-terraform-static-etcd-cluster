@@ -57,14 +57,14 @@ resource "aws_route_table_association" "public" {
 }
 
 resource "aws_eip" "public_nat" {
-  count = "${length(var.availability_zones)}"
-  vpc   = true
+  count                     = "${length(var.availability_zones)}"
+  vpc                       = true
   associate_with_private_ip = "${lookup(var.nat_gateway_private_ips, "zone${count.index}")}"
 }
 
 resource "aws_nat_gateway" "public" {
   depends_on    = ["aws_internet_gateway.etcd"]
-  count = "${length(var.availability_zones)}"
+  count         = "${length(var.availability_zones)}"
   allocation_id = "${element(aws_eip.public_nat.*.id, count.index)}"
   subnet_id     = "${element(aws_subnet.public.*.id, count.index)}"
 }
