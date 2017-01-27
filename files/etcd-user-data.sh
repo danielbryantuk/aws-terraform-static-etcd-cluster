@@ -23,7 +23,7 @@ ExecStart=/usr/bin/etcd --name ETCD_NAME \
   --listen-client-urls https://INTERNAL_IP:2379,http://127.0.0.1:2379 \
   --advertise-client-urls https://INTERNAL_IP:2379 \
   --initial-cluster-token etcd-cluster-0 \
-  --initial-cluster controller0=https://10.42.0.5:2380,controller1=https://10.42.1.5:2380,controller2=https://10.42.2.5:2380 \
+  --initial-cluster controller0=https://10.42.10.5:2380,controller1=https://10.42.11.5:2380,controller2=https://10.42.12.5:2380 \
   --initial-cluster-state new \
   --data-dir=/var/lib/etcd
 Restart=on-failure
