@@ -1,8 +1,25 @@
 #!/bin/bash
+
+mkdir -p /etc/etcd/
+cd /etc/etcd
+
+cat > ca.pem <<EOF
+${ca_pem_contents}
+EOF
+
+cat > etcd-key.pem <<EOF
+${etcd_key_pem_contents}
+EOF
+
+cat > etcd.pem <<EOF
+${etc_pem_contents}
+EOF
+
 cd /tmp
 wget https://github.com/coreos/etcd/releases/download/v3.0.10/etcd-v3.0.10-linux-amd64.tar.gz
 tar -xvf etcd-v3.0.10-linux-amd64.tar.gz
 mv etcd-v3.0.10-linux-amd64/etcd* /usr/bin/
+
 mkdir -p /var/lib/etcd
 
 cat > etcd.service <<EOF
@@ -12,10 +29,10 @@ Documentation=https://github.com/coreos
 
 [Service]
 ExecStart=/usr/bin/etcd --name ETCD_NAME \
-  --cert-file=/etc/etcd/kubernetes.pem \
-  --key-file=/etc/etcd/kubernetes-key.pem \
-  --peer-cert-file=/etc/etcd/kubernetes.pem \
-  --peer-key-file=/etc/etcd/kubernetes-key.pem \
+  --cert-file=/etc/etcd/etcd.pem \
+  --key-file=/etc/etcd/etcd-key.pem \
+  --peer-cert-file=/etc/etcd/etcd.pem \
+  --peer-key-file=/etc/etcd/etcd-key.pem \
   --trusted-ca-file=/etc/etcd/ca.pem \
   --peer-trusted-ca-file=/etc/etcd/ca.pem \
   --initial-advertise-peer-urls https://INTERNAL_IP:2380 \

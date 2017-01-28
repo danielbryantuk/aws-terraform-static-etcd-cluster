@@ -25,7 +25,7 @@ resource "aws_instance" "etcd" {
 
   key_name = "${aws_key_pair.daniel.key_name}"
 
-  user_data = "${file("files/etcd-user-data.sh")}"
+  user_data = "${data.template_file.user_data.rendered}"
 
   tags {
     Name  = "${var.env}-instance-etcd${count.index}"
@@ -47,5 +47,15 @@ resource "aws_instance" "jump_box" {
   tags {
     Name  = "${var.env}-jump-box"
     Owner = "${var.owner}"
+  }
+}
+
+data "template_file" "user_data" {
+  template = "${file("files/etcd-user-data.sh")}"
+
+  vars {
+    ca_pem_contents       = "${tls_self_signed_cert.ca.cert_pem}"
+    etcd_key_pem_contents = "${tls_private_key.etcd.private_key_pem}"
+    etc_pem_contents      = "${tls_locally_signed_cert.etcd.cert_pem}"
   }
 }
