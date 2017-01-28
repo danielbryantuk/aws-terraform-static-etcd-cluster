@@ -62,16 +62,6 @@ resource "aws_security_group" "etcd-instance" {
   }
 }
 
-resource "aws_security_group_rule" "allow_elb_ssh_ingress" {
-  type                     = "ingress"
-  from_port                = 22
-  to_port                  = 22
-  protocol                 = "tcp"
-  source_security_group_id = "${aws_security_group.public-facing-elb.id}"
-
-  security_group_id = "${aws_security_group.etcd-instance.id}"
-}
-
 resource "aws_security_group_rule" "allow_internal_ssh_ingress" {
   type      = "ingress"
   from_port = 22
@@ -86,6 +76,16 @@ resource "aws_security_group_rule" "allow_jump_box_ssh_ingress" {
   type                     = "ingress"
   from_port                = 22
   to_port                  = 22
+  protocol                 = "tcp"
+  source_security_group_id = "${aws_security_group.jump_box.id}"
+
+  security_group_id = "${aws_security_group.etcd-instance.id}"
+}
+
+resource "aws_security_group_rule" "allow_jump_box_etcd_ingress" {
+  type                     = "ingress"
+  from_port                = 2379
+  to_port                  = 2379
   protocol                 = "tcp"
   source_security_group_id = "${aws_security_group.jump_box.id}"
 
