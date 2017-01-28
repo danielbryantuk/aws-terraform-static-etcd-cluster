@@ -15,9 +15,7 @@ resource "aws_elb" "etcd" {
     unhealthy_threshold = 2
     timeout             = 3
 
-    /*TODO change this*/
-    /*target = "HTTP:2379/health"*/
-    target = "TCP:22"
+    target = "HTTPS:2379/health"
 
     interval = 30
   }
