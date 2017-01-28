@@ -52,8 +52,8 @@ EOF
 
 INTERNAL_IP=$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)
 ETCD_NAME=controller$(echo $INTERNAL_IP | cut -c 8)
-sed -i s/INTERNAL_IP/${INTERNAL_IP}/g etcd.service
-sed -i s/ETCD_NAME/${ETCD_NAME}/g etcd.service
+sed -i s/INTERNAL_IP/$${INTERNAL_IP}/g etcd.service
+sed -i s/ETCD_NAME/$${ETCD_NAME}/g etcd.service
 mv etcd.service /etc/systemd/system/
 
 systemctl daemon-reload
