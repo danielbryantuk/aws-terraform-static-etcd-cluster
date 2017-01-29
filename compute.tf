@@ -14,6 +14,16 @@ data "aws_ami" "ubuntu" {
   owners = ["${var.instance_image_provider_id}"]
 }
 
+data "template_file" "etcd_user_data" {
+  template = "${file("templates/etcd-user-data.sh.tpl")}"
+
+  vars {
+    ca_pem_contents       = "${tls_self_signed_cert.ca.cert_pem}"
+    etcd_key_pem_contents = "${tls_private_key.etcd.private_key_pem}"
+    etc_pem_contents      = "${tls_locally_signed_cert.etcd.cert_pem}"
+  }
+}
+
 resource "aws_instance" "etcd" {
   count         = "${length(var.availability_zones)}"
   ami           = "${data.aws_ami.ubuntu.id}"
@@ -25,7 +35,7 @@ resource "aws_instance" "etcd" {
 
   key_name = "${aws_key_pair.daniel.key_name}"
 
-  user_data = "${data.template_file.user_data.rendered}"
+  user_data = "${data.template_file.etcd_user_data.rendered}"
 
   tags {
     Name  = "${var.env}-instance-etcd${count.index}"
@@ -47,15 +57,5 @@ resource "aws_instance" "jump_box" {
   tags {
     Name  = "${var.env}-jump-box"
     Owner = "${var.owner}"
-  }
-}
-
-data "template_file" "user_data" {
-  template = "${file("files/etcd-user-data.sh")}"
-
-  vars {
-    ca_pem_contents       = "${tls_self_signed_cert.ca.cert_pem}"
-    etcd_key_pem_contents = "${tls_private_key.etcd.private_key_pem}"
-    etc_pem_contents      = "${tls_locally_signed_cert.etcd.cert_pem}"
   }
 }
