@@ -3,6 +3,9 @@ This is a simple demonstration of the code required to deploy a static multi-AZ
 [CoreOS etcd](https://github.com/coreos/etcd) cluster within AWS EC2 using
 [HashiCorp's Terraform](https://www.terraform.io/) programmable infrastructure tool.
 
+*This demo etcd cluster is in no way production-ready, and should be used for experimental 
+purposes only!*
+
 The Terraform code creates multi-AZ public and private subnets containing:
 * Public
   * Elastic Load Balancer, forwarding to the etcd instances in the private subnets
@@ -33,9 +36,7 @@ instance_public_key_contents = "<< your AWS instance public key>>"
 current_location_cidr = "<< CIDR block of you current location e.g 23.43.12.01/32 >>"
 
 ```
-Then simply apply the Terraform configuration (when running this in production
-it is strongly recommended save a ['plan'](https://www.terraform.io/docs/commands/plan.html)
-first, and then apply this)
+Then simply apply the Terraform configuration (or generate a  ['plan'](https://www.terraform.io/docs/commands/plan.html) and apply this)
 
 ```
 $ terraform apply
