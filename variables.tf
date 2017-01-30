@@ -6,8 +6,6 @@ variable "current_location_cidr" {}
 
 variable "instance_ssh_username" {}
 
-variable "instance_private_key_file" {}
-
 variable "instance_public_key_contents" {}
 
 variable "owner" {

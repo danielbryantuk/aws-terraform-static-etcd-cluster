@@ -21,6 +21,7 @@ data "template_file" "etcd_user_data" {
     ca_pem_contents       = "${tls_self_signed_cert.ca.cert_pem}"
     etcd_key_pem_contents = "${tls_private_key.etcd.private_key_pem}"
     etc_pem_contents      = "${tls_locally_signed_cert.etcd.cert_pem}"
+    etcd_private_ips = "${join(",",values(var.etcd_private_ips))}"
   }
 }
 
