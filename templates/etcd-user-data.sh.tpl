@@ -67,7 +67,7 @@ ETCD_NAME=etcd$(echo $INTERNAL_IP | cut -c 8)
 
 sed -i s/INTERNAL_IP/$${INTERNAL_IP}/g etcd.service
 sed -i s/ETCD_NAME/$${ETCD_NAME}/g etcd.service
-sed -i s@ETCD_INITIAL_CLUSTER@$${ETCD_INITIAL_CLUSTER}@g etcd.service
+sed -i s@ETCD_INITIAL_CLUSTER@$ETCD_INITIAL_CLUSTER@g etcd.service
 mv etcd.service /etc/systemd/system/
 
 systemctl daemon-reload
